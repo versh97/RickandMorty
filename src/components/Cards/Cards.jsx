@@ -10,8 +10,9 @@ export default function Cards(props) {
       <CardsContainer  >
         {characters.map((character) => {
           return (
-           <Card
+            <Card
             key={character.id}
+            id={character.id}
             name={character.name}
             species={character.species}
             gender={character.gender}
