@@ -1,23 +1,22 @@
 import Card from '../Card/Card';
-import React from "react";
+// import React from "react";
 import { CardsContainer } from './styleComponents';
 
 
-export default function Cards(props) {
-   const { characters } = props;
-   const onClose = (id) => props.onClose(id);
+export default function Cards({ characters, onClose }) {
+   
    return (
-      <CardsContainer  >
-        {characters.map((character) => {
+      <CardsContainer>
+        {characters.map(({id, name, species, gender, image}) => {
           return (
             <Card
-            key={character.id}
-            id={character.id}
-            name={character.name}
-            species={character.species}
-            gender={character.gender}
-            image={character.image}
-            onClose={() => onClose(character.id)}
+            key={id}
+            id={id}
+            name={name}
+            species={species}
+            gender={gender}
+            image={image}
+            onClose={onClose}
           />
           );
        })}
