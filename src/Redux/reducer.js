@@ -1,18 +1,35 @@
-import { ADD_FAVORITE, REMOVE_FAVORITE } from "./actions";
+import { ADD_FAVORITE, FILTER, REMOVE_FAVORITE, ORDER } from "./actions";
 
 const initialState = {
     myFavorites: [],
+    allCharacters: [],
 };
 
 const rootReducer = (state = initialState, action) => {
     switch(action.type){
         case ADD_FAVORITE:
             return{...state,
-                myFavorites:[...state.myFavorites, action.payload]}
+                myFavorites:[...state.allCharacters, action.payload]}
         case REMOVE_FAVORITE:
             return{...state,
                 myFavorites: state.myFavorites.filter((char) => char.id !== action.payload)}
-
+        case FILTER:
+            const { allCharacters } = state;
+            const filteredFavorites = allCharacters.filter(character => character.gender === action.payload);
+            return { ...state, myFavorites: filteredFavorites };
+        case "ORDER":
+             let sortedFavorites;
+             if (action.payload === "Ascendente") {
+                  sortedFavorites = state.myFavorites.sort((a, b) => a.id - b.id);
+                } else if (action.payload === "Descendente") {
+                  sortedFavorites = state.myFavorites.sort((a, b) => b.id - a.id);
+                } else {
+                 sortedFavorites = state.myFavorites;
+                }
+  return {
+    ...state,
+    myFavorites: sortedFavorites,
+  };
 
          default:
             return{...state};
