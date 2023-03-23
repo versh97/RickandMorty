@@ -43,7 +43,7 @@ function App () {
     if (characters.find((char) => char.id === id)) {
       alert ("Personaje Repetido!")
     } else {
-      fetch(`${URL_BASE}/character/${id}`)
+      fetch(`${URL_BASE}/onsearch/${id}`)
        .then((response) => response.json())
        .then((data) => {
           if (data.name) {
