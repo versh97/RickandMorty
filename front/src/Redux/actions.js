@@ -1,8 +1,13 @@
+import axios from 'axios';
+
+
 export const ADD_FAVORITE = 'ADD_FAVORITE';
 export const REMOVE_FAVORITE = 'REMOVE_FAVORITE';
 export const FILTER = 'FILTER';
 export const ORDER = 'ORDER';
 export const GET_CHARACTERS_DETAIL = 'GET_CHARACTERS_DETAIL'; 
+export const GET_FAVORITES = 'GET_FAVORITES';
+export const CLEAN_DETAIL = 'CLEAN_DETAIL';
 
 
 export const filterCards = (gender) => {
@@ -15,22 +20,32 @@ export const orderCards = (id) => {
 
 
 export const addFavorite = (character) =>{
-    return{ type: ADD_FAVORITE, payload: character};
+  return function(dispatch){
+    dispatch({ type: ADD_FAVORITE, payload: character});
+  }
+    //return{ type: ADD_FAVORITE, payload: character};
 };
 
 export const removeFavorite = (id) =>{
     return{ type: REMOVE_FAVORITE, payload: id}
 };
 
-export const getCharacters = (id) => {
-  return function (dispatch){
-    const URL_BASE = "https://localhost:3001/rickandmorty";
+export const getCharacterDetail = (id) => {
+  return async function (dispatch){
+    const URL_BASE = "http://localhost:3001";
     
-    fetch(`${URL_BASE}/detail/${id}`)
-    .then((response) => response.json())
-    .then((data) => {
-      dispatch({ type: GET_CHARACTER_DETAIL, payload: data });
-    })
+    const response = await axios.get(`${URL_BASE}/detail/${id}`)
+    dispatch({ type: GET_CHARACTERS_DETAIL, payload: response.data });
+  }
+};
+
+export const getFavorites = () => {
+  return async function  (dispatch){
+    const URL_BASE = "http://localhost:3001";
+    
+    const response = await axios.get(`${URL_BASE}/rickandmorty/fav`)
+    dispatch({ type: GET_FAVORITES, payload: response.data }); 
+    //payload es lo que se va a enviar al reducer
   }
 };
 

@@ -1,6 +1,9 @@
 import {useSelector, useDispatch} from 'react-redux';
 import Card from '../Card/Card';
 import { removeFavorite,orderCards, filterCards } from '../../Redux/actions';
+import { getFavorites } from '../../Redux/actions';
+import { useEffect } from 'react';
+
 
 const Favorites = () =>{
 
@@ -10,6 +13,10 @@ const Favorites = () =>{
     const handleRemoveFavorite = (id) => {
         dispatch(removeFavorite(id));
     }
+
+    useEffect(() => {
+        dispatch(getFavorites());
+    }, []);
 
     return (
         <>

@@ -15,11 +15,8 @@ import Favorites from './components/Favorites/Favorites';
 function App () {
   const [characters, setCharacters] = useState([]);
   const location = useLocation();
-
   const [access, setAccess] = useState(false);
-
   const navigate = useNavigate();
-
   const username = 'cdvr10245@gmail.com';
   const password = "cd21dr97";
 
@@ -35,27 +32,26 @@ function App () {
   },[access]);
 
 
-   const onSearch = (id) =>  {
-
-    const URL_BASE = "https://localhost:3001/rickandmorty";
-    //const API_KEY = "79b41760b9bd.bf40825cf5aa04a0b5ca";
-
+  const onSearch = (id) => {
+    const URL_BASE = "https://localhost:3001";
     if (characters.find((char) => char.id === id)) {
       alert ("Personaje Repetido!")
     } else {
       fetch(`${URL_BASE}/onsearch/${id}`)
-       .then((response) => response.json())
-       .then((data) => {
+        .then((response) => response.json())
+        .then((data) => {
           if (data.name) {
-             setCharacters((oldChars) => [...oldChars, data]);
+            setCharacters((oldChars) => [...oldChars, data]);
           } else {
             alert('No hay personajes con ese ID');
           }
-       });
-
+        })
+        .catch((error) => {
+          console.log('Error:', error);
+          alert('Error al buscar personaje');
+        });
     }
-    
- }
+  };
 
    const onClose = (id) => {
     setCharacters(

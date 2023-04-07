@@ -1,4 +1,4 @@
-import { ADD_FAVORITE, FILTER, REMOVE_FAVORITE, ORDER } from "./actions";
+import { ADD_FAVORITE, FILTER, REMOVE_FAVORITE, ORDER, GET_FAVORITES } from "./actions";
 
 const initialState = {
     myFavorites: [],
@@ -17,7 +17,7 @@ const rootReducer = (state = initialState, action) => {
             const { allCharacters } = state;
             const filteredFavorites = allCharacters.filter(character => character.gender === action.payload);
             return { ...state, myFavorites: filteredFavorites };
-        case "ORDER":
+        case ORDER:
              let sortedFavorites;
              if (action.payload === "Ascendente") {
                   sortedFavorites = state.myFavorites.sort((a, b) => a.id - b.id);
@@ -26,10 +26,10 @@ const rootReducer = (state = initialState, action) => {
                 } else {
                  sortedFavorites = state.myFavorites;
                 }
-  return {
-    ...state,
-    myFavorites: sortedFavorites,
-  };
+             return { ...state,myFavorites: sortedFavorites,};
+        case GET_FAVORITES:
+            return{...state, myFavorites: action.payload};
+
 
          default:
             return{...state};
